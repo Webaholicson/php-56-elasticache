@@ -18,5 +18,7 @@ RUN sudo docker-php-ext-enable geoip memcache redis
 # Install PHP extensions
 RUN sudo docker-php-ext-install mcrypt opcache pdo_mysql soap tidy bcmath
 
-RUN wget https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-5.6/latest-64bit \
-&& tar xvzf AmazonElasti* && 
+RUN wget https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-5.6/latest-64bit -O elasticache-php-client.tgz \
+	&& pecl install elasticache-php-client.tgz \
+	&& rm -f elasticache-php-client.tgz \
+	&& echo "extension=amazon-elasticache-cluster-client.so" | tee --append /usr/local/etc/php/conf.d/memcached.ini

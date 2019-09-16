@@ -10,7 +10,8 @@ RUN sudo apt-get install bash geoip-database geoip-database-extra libc-client-de
 RUN wget https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-5.6/latest-64bit -O elasticache-php-client.tgz \
 	&& sudo pecl install elasticache-php-client.tgz \
 	&& rm -f elasticache-php-client.tgz \
-	&& echo "extension=amazon-elasticache-cluster-client.so" | sudo tee --append /usr/local/etc/php/conf.d/memcached.ini
+	&& echo "extension=amazon-elasticache-cluster-client.so" | sudo tee --append /usr/local/etc/php/conf.d/memcached.ini \
+	&& echo "memcached.sess_consistent_hash=1" | sudo tee --append /usr/local/etc/php/conf.d/memcached.ini
 
 # Install PECL extensions
 RUN sudo pecl install apcu geoip memcache
